@@ -1,18 +1,14 @@
 def sort(array)
-    i = 1
-    swap = 0
-
-        while i < array.length do
+    swap = true
+    while swap
+        swap = false
+        for i in 1...array.length do
             if array[i] < array[i-1]
                 array[i], array[i-1] = array[i-1], array[i]
-                swap += 1
+                swap = true
             end
-            if swap > 0 && i == array.length-1
-                i = 0
-                swap = 0
-            end
-            i += 1
         end
+    end
     array
 end
 
