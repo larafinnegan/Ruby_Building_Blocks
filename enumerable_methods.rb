@@ -12,7 +12,7 @@ module Enumerable
 
 		def my_each_with_index
 			for i in 0...self.length
-				yield(self[i], self.index(i+1))     
+				yield(self[i], i)     
 			end
 			self
 		end
@@ -28,29 +28,26 @@ module Enumerable
 
 
 		def my_all?
-			result = true
 			for i in 0...self.length
-				result = false if !yield(self[i]) 
+				return false if !yield(self[i]) 
 			end
-			result
+			true
 		end
 
 
 		def my_any?
-			result = false
 			for i in 0...self.length
-				result = true if yield(self[i]) 
+				return true if yield(self[i]) 
 			end
-			result
+			false
 		end
 
 
 		def my_none?
-			result = true
 			for i in 0...self.length
-				result = false if yield(self[i])
+				return false if yield(self[i])
 			end
-			result
+			true
 		end
 
 
