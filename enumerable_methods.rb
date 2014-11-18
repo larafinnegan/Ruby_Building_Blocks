@@ -69,16 +69,29 @@ module Enumerable
 		end
 
 
-
 		def my_inject(accum=self[0])
-    		for i in 0...self.size
+			self.unshift(self[0]) if accum != self[0]
+			for i in 1...self.size
 				accum = yield(accum, self[i])   
 			end
 			accum
 		end
+		
+		
+		def multiply_els
+			self.my_inject { |result, element| result * element }
+		end
+		
+
+		def my_map(&map_proc)
+    		new_array = []
+			for i in 0...self.size
+				new_array << map_proc.call(self[i])
+			end
+			new_array
+		end
 	end
     
-    [4,2,1,3].my_inject(8) { |result, element| result * element }
 
 	[1,2,3].my_each { |num| puts num * 3 }
 	[1,2,3].my_each_with_index { |num, idx| puts "#{num} #{idx}" }
@@ -89,5 +102,8 @@ module Enumerable
 	[2,2,3,4,1,6].my_count { |num| num == 2 }
 	[2,2,3,4,1,6].my_map { |num| num * 3 }
 	[4,2,1,3].my_inject { |result, element| result + element }
-
+	[2,4,5].multiply_els
+	map_proc = Proc.new { |num| num * 3 }
+		[1,2,3].my_map(&map_proc)
+	
 end
