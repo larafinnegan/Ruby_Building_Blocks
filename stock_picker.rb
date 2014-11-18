@@ -1,8 +1,7 @@
 def picker(prices)
-    buy = 0
     max_diff = 0
 
-    while buy < prices.length-1 do
+    for buy in 0...prices.length
         sell = buy + 1
         while sell < prices.length
 	    	diff = prices[sell] - prices[buy] 
@@ -13,13 +12,12 @@ def picker(prices)
             end
             sell += 1
 	    end
-        buy += 1
     end
 	
     if max_diff <= 0
-        return "Don't buy!"
+        "Don't buy!"
     else    
-        return "You should buy on day #{best_buy} and sell on 
+        "You should buy on day #{best_buy} and sell on 
         day #{best_sell} for a profit of #{max_diff}."
     end
 end
