@@ -69,14 +69,16 @@ module Enumerable
 		end
 
 
-		def my_inject
-			result = self[0]
-			for i in 1...self.size
-				result = yield(result, self[i])   
+
+		def my_inject(accum=self[0])
+    		for i in 0...self.size
+				accum = yield(accum, self[i])   
 			end
-			result
+			accum
 		end
 	end
+    
+    [4,2,1,3].my_inject(8) { |result, element| result * element }
 
 	[1,2,3].my_each { |num| puts num * 3 }
 	[1,2,3].my_each_with_index { |num, idx| puts "#{num} #{idx}" }
@@ -86,6 +88,6 @@ module Enumerable
 	[2,2,3,4,1,6].my_none? { |num| num == 2 }
 	[2,2,3,4,1,6].my_count { |num| num == 2 }
 	[2,2,3,4,1,6].my_map { |num| num * 3 }
-	[4,2,1,3].my_inject { |result, element| result * element }
+	[4,2,1,3].my_inject { |result, element| result + element }
 
 end
