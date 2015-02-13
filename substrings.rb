@@ -1,17 +1,13 @@
 def substring(input, dictionary)
-    output=Hash.new(0)
+  output = Hash.new(0)
 
-    input.downcase.split(" ").each do |x|
-        dictionary.each do |word|
-            if x.include?(word)
-                output[word] += 1
-            end
-        end
-    end
-    output
+  input.downcase.split(" ").each do |x|
+    dictionary.each {|word| output[word] += 1 if x.include?(word)}
+  end
+  output
 end
 
 dictionary = ["below","down","go","going","horn",\
 "how","howdy","it","i","low","own","part","partner","sit"]
 
-substring("Howdy partner, sit down! How's it going?", dictionary)
+p substring("Howdy partner, sit down! How's it going?", dictionary)
