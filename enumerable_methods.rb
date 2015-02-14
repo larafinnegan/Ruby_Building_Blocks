@@ -3,15 +3,17 @@ module Enumerable
 	class Array 
 		
 		def my_each
-			for i in 0...self.length
-				yield(self[i])   
+			return enum_for(:my_each) unless block_given?
+			for i in self
+				block_given? ? yield(self[i])
 			end
 			self
 		end
 
 
 		def my_each_with_index
-			for i in 0...self.length
+			return to_enum(:my_each_with_index) unless block_given?
+			for i in self
 				yield(self[i], i)     
 			end
 			self
@@ -19,8 +21,9 @@ module Enumerable
 
 
 		def my_select
+			return to_enum(:my_select) unless block_given?
 			new_array = []
-			for i in 0...self.length
+			for i in self
 				new_array << self[i] if yield(self[i])
 			end
 			new_array
@@ -28,32 +31,54 @@ module Enumerable
 
 
 		def my_all?
-			for i in 0...self.length
-				return false if !yield(self[i]) 
+			if block_given?
+				for i in self
+					return false unless yield(self[i]) 
+				end
+				true
+			else
+				for i in self
+					return false unless self[i]
+				end
+				true
 			end
-			true
 		end
 
 
 		def my_any?
-			for i in 0...self.length
-				return true if yield(self[i]) 
+			if block_given?
+				for i in self
+					return true if yield(self[i]) 
+				end
+				false
+			else
+				for i in self
+					return true if self[i] 
+				end
+				false
 			end
-			false
 		end
 
 
 		def my_none?
-			for i in 0...self.length
-				return false if yield(self[i])
+			if block_given?
+				for i in self
+					return false if yield(self[i])
+				end
+				true
+			else
+				for i in self
+					return false if self[i]
+				end
+				true
 			end
-			true
 		end
 
 
 		def my_count
+			return self.size unless block_given?
 			count = 0
-			for i in 0...self.length
+			for i in self
 				count += 1 if yield(self[i])
 			end
 			count
@@ -61,17 +86,18 @@ module Enumerable
 
 
 		def my_map
+			return to_enum(:my_map) unless block_given?
 			new_array = []
-			for i in 0...self.size
+			for i in self
 				new_array << yield(self[i])   
 			end
 			new_array
 		end
 
 
-		def my_inject(accum=self[0])
-			self.unshift(self[0]) if accum != self[0]
-			for i in 1...self.size
+		def my_inject(accum = self[0])
+			self.unshift(self[0]) unless accum == self[0]
+			for i in self
 				accum = yield(accum, self[i])   
 			end
 			accum
@@ -85,7 +111,7 @@ module Enumerable
 
 		def my_map(&map_proc)
     		new_array = []
-			for i in 0...self.size
+			for i in self
 				new_array << map_proc.call(self[i])
 			end
 			new_array
@@ -104,6 +130,6 @@ module Enumerable
 	[4,2,1,3].my_inject { |result, element| result + element }
 	[2,4,5].multiply_els
 	map_proc = Proc.new { |num| num * 3 }
-		[1,2,3].my_map(&map_proc)
+	[1,2,3].my_map(&map_proc)
 	
 end

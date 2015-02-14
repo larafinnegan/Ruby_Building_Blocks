@@ -33,4 +33,8 @@ describe "#cipher" do
   it "translates a sentence with multiple characters" do
     cipher("Hooray!  Last test.  Or is it?", 3).should == "Krrudb!  Odvw whvw.  Ru lv lw?"
   end
+
+  it "allows shifts greater than 26" do 
+    cipher("testingaz", 28).should == "vguvkpicb"
+  end
 end

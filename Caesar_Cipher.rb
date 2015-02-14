@@ -21,4 +21,4 @@ def cipher(input, shift)
     letters.join("")
 end
         
-p cipher("Hooray!  Last test.  Or is it?", 3)
+p cipher("testingaz", 28)
