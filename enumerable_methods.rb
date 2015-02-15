@@ -118,16 +118,16 @@ module Enumerable
 end
 
 
-[1,2,3].my_each { |num| puts num * 3 }
-[1,2,3].my_each_with_index { |num, idx| puts "#{num} #{idx}" }
-[1,2,3,4,5,6,7,8,9,10].my_select { |num| num >= 3 && num <= 7 }
-[1,2,3,4,5,6].my_all? { |num| num == 1 }
-[2,2,3,4,1,6].my_any? { |num| num == 7 }
-[2,2,3,4,1,6].my_none? { |num| num == 2 }
-[2,2,3,4,1,6].my_count { |num| num == 2 }
-[2,2,3,4,1,6].my_map { |num| num * 3 }
-[4,2,1,3].my_inject { |result, element| result + element }
-[2,4,5].multiply_els
-map_proc = Proc.new { |num| num * 3 }
-[1,2,3].my_map(&map_proc)
+#[1,2,3].my_each { |num| puts num * 3 }
+#[1,2,3].my_each_with_index { |num, idx| puts "#{num} #{idx}" }
+#[1,2,3,4,5,6,7,8,9,10].my_select { |num| num >= 3 && num <= 7 }
+#[1,2,3,4,5,6].my_all? { |num| num == 1 }
+#[2,2,3,4,1,6].my_any? { |num| num == 7 }
+#[2,2,3,4,1,6].my_none? { |num| num == 2 }
+#[2,2,3,4,1,6].my_count { |num| num == 2 }
+#[2,2,3,4,1,6].my_map { |num| num * 3 }
+#[4,2,1,3].my_inject { |result, element| result + element }
+#[2,4,5].multiply_els
+#map_proc = Proc.new { |num| num * 3 }
+#[1,2,3].my_map(&map_proc)
 
