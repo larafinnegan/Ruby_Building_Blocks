@@ -73,11 +73,17 @@ module Enumerable
   end
 
 
-  def my_count
-    return self.size unless block_given?
+  def my_count(*arg)
+    return self.size unless block_given? || arg != []
     count = 0
-    for i in 0...self.size
-      count += 1 if yield(self[i])
+    if block_given?
+      for i in 0...self.size
+        count += 1 if yield(self[i])
+      end
+    else
+      for i in 0...self.size
+        count += 1 if arg[0] == self[i]
+      end
     end
     count
   end
@@ -124,7 +130,7 @@ end
 #[1,2,3,4,5,6].my_all? { |num| num == 1 }
 #[2,2,3,4,1,6].my_any? { |num| num == 7 }
 #[2,2,3,4,1,6].my_none? { |num| num == 2 }
-#[2,2,3,4,1,6].my_count { |num| num == 2 }
+#[2,2,3,4,1,6].my_count(2)
 #[2,2,3,4,1,6].my_map { |num| num * 3 }
 #[4,2,1,3].my_inject { |result, element| result + element }
 #[2,4,5].multiply_els
