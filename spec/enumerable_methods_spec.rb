@@ -97,19 +97,19 @@ describe Enumerable do
 
     context "if no block is given" do
       it "returns true if no array elements are false or nil" do
-        expect(base_array.my_all?).to eql(true)
-        expect(empty_array.my_all?).to eql(true)
-        expect(with_nil_array.my_all?).to eql(false)
-        expect(all_false.my_all?).to eql(false)
+        expect(base_array.my_all?).to be true
+        expect(empty_array.my_all?).to be true
+        expect(with_nil_array.my_all?).to be false
+        expect(all_false.my_all?).to be false
       end
     end
 
     context "if a block is given" do
       it "returns true if the block returns true for all elements" do
-        expect(base_array.my_all? {|x| x.even?}).to eql(false)
-        expect(empty_array.my_all? {|x| x}).to eql(true)
-        expect(with_nil_array.my_all? {|x| x.nil?}).to eql(false)
-        expect(all_false.my_all? {|x| x.nil? || x == false}).to eql(true)
+        expect(base_array.my_all? {|x| x.even?}).to be false
+        expect(empty_array.my_all? {|x| x}).to be true
+        expect(with_nil_array.my_all? {|x| x.nil?}).to be false
+        expect(all_false.my_all? {|x| x.nil? || x == false}).to be true
       end
     end
   end
@@ -118,19 +118,19 @@ describe Enumerable do
 
     context "if no block is given" do
       it "returns true if at least one element is not false or nil" do
-        expect(base_array.my_any?).to eql(true)
-        expect(empty_array.my_any?).to eql(false)
-        expect(with_nil_array.my_any?).to eql(true)
-        expect(all_false.my_any?).to eql(false)
+        expect(base_array.my_any?).to be true
+        expect(empty_array.my_any?).to be false
+        expect(with_nil_array.my_any?).to be true
+        expect(all_false.my_any?).to be false
       end
     end
 
     context "if a block is given" do
       it "returns true if the block returns true for at least one element" do
-        expect(base_array.my_any? {|x| x.even?}).to eql(true)
-        expect(empty_array.my_any? {|x| x}).to eql(false)
-        expect(with_nil_array.my_any? {|x| x.nil?}).to eql(true)
-        expect(all_false.my_any? {|x| x.nil?}).to eql(true)
+        expect(base_array.my_any? {|x| x.even?}).to be true
+        expect(empty_array.my_any? {|x| x}).to be false
+        expect(with_nil_array.my_any? {|x| x.nil?}).to be true
+        expect(all_false.my_any? {|x| x.nil?}).to be true
       end
     end
   end
