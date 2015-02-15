@@ -112,7 +112,7 @@ module Enumerable
     self.my_inject { |result, element| result * element }
   end
 
-
+=begin
   def my_map(&map_proc)
     new_array = []
     for i in 0...self.size
@@ -120,6 +120,7 @@ module Enumerable
     end
     new_array
   end
+=end
 
 end
 

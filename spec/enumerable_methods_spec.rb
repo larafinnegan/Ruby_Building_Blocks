@@ -1,4 +1,4 @@
-require './spec_helper'
+require_relative './spec_helper'
 
 describe Enumerable do 
   include Enumerable
@@ -77,7 +77,6 @@ describe Enumerable do
         expect(empty_array.my_count(2)).to eql(0)
         expect(with_nil_array.my_count(nil)).to eql(1)
         expect(all_false.my_count(false)).to eql(2)
-
       end
     end
 
@@ -87,6 +86,70 @@ describe Enumerable do
         expect(empty_array.my_count {|x| x > 1}).to eql(0)
         expect(with_nil_array.my_count {|x| x.nil?}).to eql(1)
         expect(all_false.my_count {|x| x}).to eql(0)
+      end
+    end
+  end
+
+  describe "#my_all?" do
+
+    context "if no block is given" do
+      it "returns true if no array elements are false or nil" do
+        expect(base_array.my_all?).to eql(true)
+        expect(empty_array.my_all?).to eql(true)
+        expect(with_nil_array.my_all?).to eql(false)
+        expect(all_false.my_all?).to eql(false)
+      end
+    end
+
+    context "if a block is given" do
+      it "returns true if the block returns true for all elements" do
+        expect(base_array.my_all? {|x| x.even?}).to eql(false)
+        expect(empty_array.my_all? {|x| x}).to eql(true)
+        expect(with_nil_array.my_all? {|x| x.nil?}).to eql(false)
+        expect(all_false.my_all? {|x| x.nil? || x == false}).to eql(true)
+      end
+    end
+  end
+
+  describe "#my_any?" do
+
+    context "if no block is given" do
+      it "returns true if at least one element is not false or nil" do
+        expect(base_array.my_any?).to eql(true)
+        expect(empty_array.my_any?).to eql(false)
+        expect(with_nil_array.my_any?).to eql(true)
+        expect(all_false.my_any?).to eql(false)
+      end
+    end
+
+    context "if a block is given" do
+      it "returns true if the block returns true for at least one element" do
+        expect(base_array.my_any? {|x| x.even?}).to eql(true)
+        expect(empty_array.my_any? {|x| x}).to eql(false)
+        expect(with_nil_array.my_any? {|x| x.nil?}).to eql(true)
+        expect(all_false.my_any? {|x| x.nil?}).to eql(true)
+      end
+    end
+  end
+
+  describe "#my_map" do
+
+    context "when no block is given" do
+      it "returns an enumerable object" do 
+        expect(base_array.my_map).to be_instance_of(Enumerator)
+      end
+    end
+
+    context "when a block is given" do
+      it "returns an array object" do
+        expect(base_array.my_map {|num| num}).to be_instance_of(Array)
+      end
+
+      it "creates a new array containing the values returned by the block" do
+        expect(base_array.my_map {|x| x + 2}).to eql([11, 6, 5, 4, 9, 6, 6])
+        expect(empty_array.my_map {|x| x + 1}).to eql(empty_array)
+        expect(with_nil_array.my_map {|x| x}).to eql(with_nil_array)
+        expect(all_false.my_map {|x| x.nil?}).to eql([true, false, true, false])
       end
     end
   end
