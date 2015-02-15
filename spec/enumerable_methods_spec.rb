@@ -26,7 +26,10 @@ describe Enumerable do
       end
 
       it "applies the block instructions" do
-        expect(base_array.my_each {|num| p num * 5}).to eql(base_array.each {|num| p num * 5})
+        a = []
+        b = [11, 6, 5, 4, 9, 6, 6]
+        expect(base_array.my_each {|num| a << num + 2}).to eql(base_array)
+        expect(a).to eql(b)
       end
     end
   end
